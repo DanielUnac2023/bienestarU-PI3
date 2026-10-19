@@ -17,10 +17,13 @@ export class AuthController {
   async googleAuthRedirect(@Req() req: any, @Res() res: any) {
     const result = await this.authService.validarUsuarioGoogle(req.user);
 
-    // Retorna el token JWT y los datos del usuario en formato JSON
-    return res.status(200).json({
-      message: 'Inicio de sesión exitoso con Google',
-      data: result,
-    });
+    // En lugar de devolver JSON en pantalla, redirige al Frontend pasando el token y los datos por la URL
+    const token = result.access_token;
+    const userEncoded = encodeURIComponent(JSON.stringify(result.usuario));
+
+    // Redirección al puerto de Vite / React (http://localhost:5173)
+    return res.redirect(
+      `http://localhost:5173?token=${token}&user=${userEncoded}`,
+    );
   }
 }
