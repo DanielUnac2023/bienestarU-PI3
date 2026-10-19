@@ -13,6 +13,7 @@ import { AuthModule } from './modules/auth/auth.module.js';
     }),
     PrismaModule,
     AuthModule,
+    AgendamientosModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
