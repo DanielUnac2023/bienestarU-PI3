@@ -3,10 +3,18 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { PrismaService } from './prisma/prisma.service.js';
 import { PrismaModule } from './prisma/prisma.module.js';
-import { AgendamientosModule } from './modules/agendamientos/agendamientos.module.js';
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './modules/auth/auth.module.js';
 
 @Module({
-  imports: [PrismaModule, AgendamientosModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // Hace que las variables estén disponibles en todo el proyecto
+    }),
+    PrismaModule,
+    AuthModule,
+    AgendamientosModule
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
