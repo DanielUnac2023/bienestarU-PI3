@@ -5,6 +5,7 @@ import { PrismaService } from './prisma/prisma.service.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module.js';
+import { ReservasEspaciosModule } from './modules/reservas-espacios/reservas-espacios.module.js';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { AuthModule } from './modules/auth/auth.module.js';
     }),
     PrismaModule,
     AuthModule,
-    AgendamientosModule
+    AgendamientosModule, 
+    ReservasEspaciosModule
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
