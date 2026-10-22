@@ -31,3 +31,35 @@ model Usuario {
 
   @@map("usuarios")
 }
+
+// Modulo reserva-espacios
+
+enum EstadoReserva {
+  PENDIENTE
+  CONFIRMADA
+  CANCELADA
+  FINALIZADA
+}
+
+model EspacioDeportivo {
+  id               String    @id @default(uuid())
+  nombre           String
+  minParticipantes Int       @default(1)
+  reservas         Reserva[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Reserva {
+  id                 String           @id @default(uuid())
+  usuarioId          String           // ID del usuario (clave foránea cuando exista el módulo de Usuarios)
+  espacioId          String
+  espacio            EspacioDeportivo @relation(fields: [espacioId], references: [id])
+  fechaInicio        DateTime
+  fechaFin           DateTime
+  cantidadPersonas   Int
+  estado             EstadoReserva    @default(PENDIENTE)
+  createdAt          DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
