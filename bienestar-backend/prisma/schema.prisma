@@ -32,7 +32,7 @@ model Usuario {
   @@map("usuarios")
 }
 
-// Modulo reserva-espacios
+// ------------ Cambios Duvan - Modulo reserva-espacios
 
 enum EstadoReserva {
   PENDIENTE
@@ -63,3 +63,46 @@ model Reserva {
   updatedAt        DateTime         @updatedAt
 }
 
+
+// ------------ Cambios Gabriel - Modulo Citas 
+
+
+ enum CategoriaServicio {
+  PSICOLOGIA
+  NUTRICION
+  ESPIRITUAL
+}
+
+enum EstadoCita {
+  PROGRAMADA
+  ATENDIDA
+  CANCELADA
+}
+
+model agendamiento {
+  id              String            @id @default(uuid())
+  estudianteId    String
+  profesionalId   String
+  categoria       CategoriaServicio
+  fechaHoraInicio DateTime
+  fechaHoraFin    DateTime
+  lugar           String            @default("Oficina CAU")
+  motivo          String?
+  estado          EstadoCita        @default(PROGRAMADA)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@map("agendamientos")
+}
+
+model DisponibilidadProfesional {
+  id              String            @id @default(uuid())
+  profesionalId   String
+  categoria       CategoriaServicio
+  fechaHoraInicio DateTime
+  fechaHoraFin    DateTime
+  activo          Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+
+  @@map("disponibilidades_profesionales")
+}
